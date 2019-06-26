@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ExtremeBookHolding.Core;
 
-namespace ExtremeBookHolding
+namespace ExtremeBookHolding.Core
 {
     public class Journal : INotifyPropertyChanged
     {

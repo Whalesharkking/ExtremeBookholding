@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using ExtremeBookHolding.Core;
 
-namespace ExtremeBookHolding
+namespace ExtremeBookHolding.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
