@@ -1,6 +1,6 @@
 ﻿namespace ExtremeBookHolding.Core
 {
-    public enum AccountType { Active, Passive, Both}
+    public enum AccountType { Active, Passive, Both }
 
     public class Account
     {

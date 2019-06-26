@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace ExtremeBookHolding.Core
 {
-    public class Journal : INotifyPropertyChanged
+    public class Journal : PropertyChangedProperty
     {
         private Account _account;
+
         public Account Account
         {
             get => _account;
@@ -20,6 +19,7 @@ namespace ExtremeBookHolding.Core
         }
 
         private ObservableCollection<AccountingRecord> sollAccountingRecords;
+
         public ObservableCollection<AccountingRecord> SOLLAccountingRecords
         {
             get => sollAccountingRecords;
@@ -33,6 +33,7 @@ namespace ExtremeBookHolding.Core
         }
 
         private ObservableCollection<AccountingRecord> habenAccountingRecords;
+
         public ObservableCollection<AccountingRecord> HABENAccountingRecords
         {
             get => habenAccountingRecords;
@@ -43,13 +44,6 @@ namespace ExtremeBookHolding.Core
                 habenAccountingRecords = value;
                 RaisePropertyChanged();
             }
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

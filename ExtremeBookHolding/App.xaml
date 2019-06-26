@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ExtremeBookHolding"
              StartupUri="/Src/Views/MainWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

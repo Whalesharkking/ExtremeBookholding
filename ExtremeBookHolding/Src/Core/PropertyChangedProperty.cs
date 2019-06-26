@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ExtremeBookHolding.Core
 {
-    public abstract class Property
+    public abstract class PropertyChangedProperty : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

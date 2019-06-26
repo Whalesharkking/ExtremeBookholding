@@ -16,15 +16,21 @@ namespace ExtremeBookHolding.Views
         public ObservableCollection<Journal> JournalList { get; set; } = new ObservableCollection<Journal>();
 
 
-
-
         public decimal ActivAccountingRecordsSummary => ActivAccountingRecords.Sum(x => x.Value);
-        public List<AccountingRecord> OrderedActivAccountingRecords => ActivAccountingRecords.OrderBy(x => x.Account.Id).ToList();
-        private ObservableCollection<AccountingRecord> ActivAccountingRecords { get; set; } = new ObservableCollection<AccountingRecord>();
+
+        public List<AccountingRecord> OrderedActivAccountingRecords =>
+            ActivAccountingRecords.OrderBy(x => x.Account.Id).ToList();
+
+        private ObservableCollection<AccountingRecord> ActivAccountingRecords { get; set; } =
+            new ObservableCollection<AccountingRecord>();
 
         public decimal PassivAccountingRecordsSummary => PassivAccountingRecords.Sum(x => x.Value);
-        public List<AccountingRecord> OrderedPassivAccountingRecords => PassivAccountingRecords.OrderBy(x => x.Account.Id).ToList();
-        private ObservableCollection<AccountingRecord> PassivAccountingRecords { get; set; } = new ObservableCollection<AccountingRecord>();
+
+        public List<AccountingRecord> OrderedPassivAccountingRecords =>
+            PassivAccountingRecords.OrderBy(x => x.Account.Id).ToList();
+
+        private ObservableCollection<AccountingRecord> PassivAccountingRecords { get; set; } =
+            new ObservableCollection<AccountingRecord>();
 
 
         public MainWindow()
@@ -36,6 +42,7 @@ namespace ExtremeBookHolding.Views
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -48,37 +55,38 @@ namespace ExtremeBookHolding.Views
                 JournalList.Add(new Journal()
                 {
                     Account = account,
-                    HABENAccountingRecords = new ObservableCollection<AccountingRecord> {
-                    new AccountingRecord() { Account = account, Text = "Test1Haben", Value = 11},
-                    new AccountingRecord() { Account = account, Text = "Test2Haben", Value = 22},
-                    new AccountingRecord() { Account = account, Text = "Test2Haben", Value = 33},
-                },
+                    HABENAccountingRecords = new ObservableCollection<AccountingRecord>
+                    {
+                        new AccountingRecord() {Account = account, Text = "Test1Haben", Value = 11},
+                        new AccountingRecord() {Account = account, Text = "Test2Haben", Value = 22},
+                        new AccountingRecord() {Account = account, Text = "Test2Haben", Value = 33},
+                    },
                     SOLLAccountingRecords = new ObservableCollection<AccountingRecord>
-                {
-                    new AccountingRecord() { Account = account, Text = "Test1Soll", Value = 101},
-                    new AccountingRecord() { Account = account, Text = "Test2Soll", Value = 202},
-                    new AccountingRecord() { Account = account, Text = "Test2Soll", Value = 303},
-                }
+                    {
+                        new AccountingRecord() {Account = account, Text = "Test1Soll", Value = 101},
+                        new AccountingRecord() {Account = account, Text = "Test2Soll", Value = 202},
+                        new AccountingRecord() {Account = account, Text = "Test2Soll", Value = 303},
+                    }
                 });
             }
-
         }
 
 
         private void PrepareAccountList()
         {
-            accounts.ItemsSource = new List<Account>() {
-            new Account() {Name = "Kasse" , Type = AccountType.Active},
-            new Account() {Name = "Post" , Type = AccountType.Active},
-            new Account() {Name = "Bank" , Type = AccountType.Both},
-            new Account() {Name = "FLL" , Type = AccountType.Active},
-            new Account() {Name = "Warenbestand" , Type = AccountType.Active},
-            new Account() {Name = "Mobilien" , Type = AccountType.Active},
-            new Account() {Name = "Immobilien" , Type = AccountType.Active},
-            new Account() {Name = "VLL" , Type = AccountType.Passive},
-            new Account() {Name = "Darlehensschuld" , Type = AccountType.Passive},
-            new Account() { Name = "Hypotheken" , Type = AccountType.Passive},
-            new Account() { Name = "Eigenkapital" , Type = AccountType.Passive}
+            accounts.ItemsSource = new List<Account>()
+            {
+                new Account() {Name = "Kasse", Type = AccountType.Active},
+                new Account() {Name = "Post", Type = AccountType.Active},
+                new Account() {Name = "Bank", Type = AccountType.Both},
+                new Account() {Name = "FLL", Type = AccountType.Active},
+                new Account() {Name = "Warenbestand", Type = AccountType.Active},
+                new Account() {Name = "Mobilien", Type = AccountType.Active},
+                new Account() {Name = "Immobilien", Type = AccountType.Active},
+                new Account() {Name = "VLL", Type = AccountType.Passive},
+                new Account() {Name = "Darlehensschuld", Type = AccountType.Passive},
+                new Account() {Name = "Hypotheken", Type = AccountType.Passive},
+                new Account() {Name = "Eigenkapital", Type = AccountType.Passive}
             };
             accounts.DisplayMemberPath = nameof(accounts.Name);
         }
@@ -92,12 +100,14 @@ namespace ExtremeBookHolding.Views
                     switch (selectedAccount.Type)
                     {
                         case AccountType.Active:
-                            InserAccountRecordWithAccountValueToAccountRecordList(ActivAccountingRecords, selectedAccount);
+                            InserAccountRecordWithAccountValueToAccountRecordList(ActivAccountingRecords,
+                                selectedAccount);
                             RaisePropertyChanged(nameof(OrderedActivAccountingRecords));
                             RaisePropertyChanged(nameof(ActivAccountingRecordsSummary));
                             break;
                         case AccountType.Passive:
-                            InserAccountRecordWithAccountValueToAccountRecordList(PassivAccountingRecords, selectedAccount);
+                            InserAccountRecordWithAccountValueToAccountRecordList(PassivAccountingRecords,
+                                selectedAccount);
                             RaisePropertyChanged(nameof(OrderedPassivAccountingRecords));
                             RaisePropertyChanged(nameof(PassivAccountingRecordsSummary));
                             break;
@@ -109,7 +119,8 @@ namespace ExtremeBookHolding.Views
             }
         }
 
-        private void InserAccountRecordWithAccountValueToAccountRecordList(ObservableCollection<AccountingRecord> accountingRecordList, Account account)
+        private void InserAccountRecordWithAccountValueToAccountRecordList(
+            ObservableCollection<AccountingRecord> accountingRecordList, Account account)
         {
             var accountingRecord = accountingRecordList.FirstOrDefault(x => x.Account == account);
             if (accountingRecord != null)

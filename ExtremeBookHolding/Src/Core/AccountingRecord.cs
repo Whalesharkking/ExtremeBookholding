@@ -1,11 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace ExtremeBookHolding.Core
+﻿namespace ExtremeBookHolding.Core
 {
-    public class AccountingRecord : INotifyPropertyChanged
+    public class AccountingRecord : PropertyChangedProperty
     {
         private Account _account;
+
         public Account Account
         {
             get => _account;
@@ -19,6 +17,7 @@ namespace ExtremeBookHolding.Core
         }
 
         private decimal _value;
+
         public decimal Value
         {
             get => _value;
@@ -32,6 +31,7 @@ namespace ExtremeBookHolding.Core
         }
 
         private string _text;
+
         public string Text
         {
             get => _text;
@@ -42,13 +42,6 @@ namespace ExtremeBookHolding.Core
                 _text = value;
                 RaisePropertyChanged();
             }
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
