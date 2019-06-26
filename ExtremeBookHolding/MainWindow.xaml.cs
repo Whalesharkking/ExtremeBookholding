@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ExtremeBookHolding
 {
@@ -29,11 +18,11 @@ namespace ExtremeBookHolding
 
 
         public decimal ActivAccountingRecordsSummary => ActivAccountingRecords.Sum(x => x.Value);
-        public List<AccountingRecord> OrderedActivAccountingRecords => ActivAccountingRecords.OrderBy(x => x.Account.ID).ToList();
+        public List<AccountingRecord> OrderedActivAccountingRecords => ActivAccountingRecords.OrderBy(x => x.Account.Id).ToList();
         private ObservableCollection<AccountingRecord> ActivAccountingRecords { get; set; } = new ObservableCollection<AccountingRecord>();
 
         public decimal PassivAccountingRecordsSummary => PassivAccountingRecords.Sum(x => x.Value);
-        public List<AccountingRecord> OrderedPassivAccountingRecords => PassivAccountingRecords.OrderBy(x => x.Account.ID).ToList();
+        public List<AccountingRecord> OrderedPassivAccountingRecords => PassivAccountingRecords.OrderBy(x => x.Account.Id).ToList();
         private ObservableCollection<AccountingRecord> PassivAccountingRecords { get; set; } = new ObservableCollection<AccountingRecord>();
 
 
@@ -78,17 +67,17 @@ namespace ExtremeBookHolding
         private void PrepareAccountList()
         {
             accounts.ItemsSource = new List<Account>() {
-            new Account() {ID= 1, Name = "Kasse" , Type = AccountType.Activ},
-            new Account() {ID= 2, Name = "Post" , Type = AccountType.Activ},
-            new Account() {ID= 3, Name = "Bank" , Type = AccountType.Both},
-            new Account() {ID= 4, Name = "FLL" , Type = AccountType.Activ},
-            new Account() {ID= 5, Name = "Warenbestand" , Type = AccountType.Activ},
-            new Account() {ID= 6, Name = "Mobilien" , Type = AccountType.Activ},
-            new Account() {ID= 7, Name = "Immobilien" , Type = AccountType.Activ},
-            new Account() {ID= 8, Name = "VLL" , Type = AccountType.Passiv},
-            new Account() {ID= 9, Name = "Darlehensschuld" , Type = AccountType.Passiv},
-            new Account() {ID= 10, Name = "Hypotheken" , Type = AccountType.Passiv},
-            new Account() {ID= 99, Name = "Eigenkapital" , Type = AccountType.Passiv}
+            new Account() {Id= 1, Name = "Kasse" , Type = AccountType.Active},
+            new Account() {Id= 2, Name = "Post" , Type = AccountType.Active},
+            new Account() {Id= 3, Name = "Bank" , Type = AccountType.Both},
+            new Account() {Id= 4, Name = "FLL" , Type = AccountType.Active},
+            new Account() {Id= 5, Name = "Warenbestand" , Type = AccountType.Active},
+            new Account() {Id= 6, Name = "Mobilien" , Type = AccountType.Active},
+            new Account() {Id= 7, Name = "Immobilien" , Type = AccountType.Active},
+            new Account() {Id= 8, Name = "VLL" , Type = AccountType.Passive},
+            new Account() {Id= 9, Name = "Darlehensschuld" , Type = AccountType.Passive},
+            new Account() {Id= 10, Name = "Hypotheken" , Type = AccountType.Passive},
+            new Account() {Id= 99, Name = "Eigenkapital" , Type = AccountType.Passive}
             };
             accounts.DisplayMemberPath = nameof(accounts.Name);
         }
@@ -99,21 +88,21 @@ namespace ExtremeBookHolding
             {
                 if (accounts.SelectedItem != null && accounts.SelectedItem is Account selectedAccount)
                 {
-                    if (selectedAccount.Type == AccountType.Activ)
+                    switch (selectedAccount.Type)
                     {
-                        InserAccountRecordWithAccountValueToAccountRecordList(ActivAccountingRecords, selectedAccount);
-                        RaisePropertyChanged(nameof(OrderedActivAccountingRecords));
-                        RaisePropertyChanged(nameof(ActivAccountingRecordsSummary));
-                    }
-                    else if (selectedAccount.Type == AccountType.Passiv)
-                    {
-                        InserAccountRecordWithAccountValueToAccountRecordList(PassivAccountingRecords, selectedAccount);
-                        RaisePropertyChanged(nameof(OrderedPassivAccountingRecords));
-                        RaisePropertyChanged(nameof(PassivAccountingRecordsSummary));
-                    }
-                    else
-                    {
-                        //TODO: Type Both noch umsetzen (z.B Als Typ Both gilt Bank, da es aktiv und passiv sein kann)
+                        case AccountType.Active:
+                            InserAccountRecordWithAccountValueToAccountRecordList(ActivAccountingRecords, selectedAccount);
+                            RaisePropertyChanged(nameof(OrderedActivAccountingRecords));
+                            RaisePropertyChanged(nameof(ActivAccountingRecordsSummary));
+                            break;
+                        case AccountType.Passive:
+                            InserAccountRecordWithAccountValueToAccountRecordList(PassivAccountingRecords, selectedAccount);
+                            RaisePropertyChanged(nameof(OrderedPassivAccountingRecords));
+                            RaisePropertyChanged(nameof(PassivAccountingRecordsSummary));
+                            break;
+                        default:
+                            //TODO: Type Both noch umsetzen (z.B Als Typ Both gilt Bank, da es aktiv und passiv sein kann)
+                            break;
                     }
                 }
             }
@@ -124,11 +113,14 @@ namespace ExtremeBookHolding
             var accountingRecord = accountingRecordList.FirstOrDefault(x => x.Account == account);
             if (accountingRecord != null)
             {
-                accountingRecord.Value += (decimal)accountValue.Value;
+                if (accountValue.Value != null)
+                    accountingRecord.Value += (decimal) accountValue.Value;
             }
             else
             {
-                accountingRecordList.Add(new AccountingRecord() { Account = account, Value = (decimal)accountValue.Value, Text = "Anfangsbilanz" });
+                if (accountValue.Value != null)
+                    accountingRecordList.Add(new AccountingRecord()
+                        {Account = account, Value = (decimal) accountValue.Value, Text = "Anfangsbilanz"});
             }
         }
     }

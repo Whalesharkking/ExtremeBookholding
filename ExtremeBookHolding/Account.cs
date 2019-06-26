@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtremeBookHolding
+﻿namespace ExtremeBookHolding
 {
-    public enum AccountType { Activ, Passiv, Both}
+    public enum AccountType { Active, Passive, Both}
 
     public class Account
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public AccountType Type { get; set; }
     }
