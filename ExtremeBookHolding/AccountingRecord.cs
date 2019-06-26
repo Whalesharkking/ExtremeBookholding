@@ -5,45 +5,42 @@ namespace ExtremeBookHolding
 {
     public class AccountingRecord : INotifyPropertyChanged
     {
-        private Account account;
+        private Account _account;
         public Account Account
         {
-            get => account;
+            get => _account;
             set
             {
-                if(account != value)
-                {
-                    account = value;
-                    RaisePropertyChanged();
-                }
+                if (_account == value)
+                    return;
+                _account = value;
+                RaisePropertyChanged();
             }
         }
 
-        private decimal value;
+        private decimal _value;
         public decimal Value
         {
-            get => this.value;
+            get => _value;
             set
             {
-                if (this.value != value)
-                {
-                    this.value = value;
-                    RaisePropertyChanged();
-                }
+                if (_value == value)
+                    return;
+                _value = value;
+                RaisePropertyChanged();
             }
         }
 
-        private string text;
+        private string _text;
         public string Text
         {
-            get => text;
+            get => _text;
             set
             {
-                if (text != value)
-                {
-                    text = value;
-                    RaisePropertyChanged();
-                }
+                if (_text == value)
+                    return;
+                _text = value;
+                RaisePropertyChanged();
             }
         }
 

@@ -67,17 +67,17 @@ namespace ExtremeBookHolding
         private void PrepareAccountList()
         {
             accounts.ItemsSource = new List<Account>() {
-            new Account() {Id= 1, Name = "Kasse" , Type = AccountType.Active},
-            new Account() {Id= 2, Name = "Post" , Type = AccountType.Active},
-            new Account() {Id= 3, Name = "Bank" , Type = AccountType.Both},
-            new Account() {Id= 4, Name = "FLL" , Type = AccountType.Active},
-            new Account() {Id= 5, Name = "Warenbestand" , Type = AccountType.Active},
-            new Account() {Id= 6, Name = "Mobilien" , Type = AccountType.Active},
-            new Account() {Id= 7, Name = "Immobilien" , Type = AccountType.Active},
-            new Account() {Id= 8, Name = "VLL" , Type = AccountType.Passive},
-            new Account() {Id= 9, Name = "Darlehensschuld" , Type = AccountType.Passive},
-            new Account() {Id= 10, Name = "Hypotheken" , Type = AccountType.Passive},
-            new Account() {Id= 99, Name = "Eigenkapital" , Type = AccountType.Passive}
+            new Account() {Name = "Kasse" , Type = AccountType.Active},
+            new Account() {Name = "Post" , Type = AccountType.Active},
+            new Account() {Name = "Bank" , Type = AccountType.Both},
+            new Account() {Name = "FLL" , Type = AccountType.Active},
+            new Account() {Name = "Warenbestand" , Type = AccountType.Active},
+            new Account() {Name = "Mobilien" , Type = AccountType.Active},
+            new Account() {Name = "Immobilien" , Type = AccountType.Active},
+            new Account() {Name = "VLL" , Type = AccountType.Passive},
+            new Account() {Name = "Darlehensschuld" , Type = AccountType.Passive},
+            new Account() { Name = "Hypotheken" , Type = AccountType.Passive},
+            new Account() { Name = "Eigenkapital" , Type = AccountType.Passive}
             };
             accounts.DisplayMemberPath = nameof(accounts.Name);
         }

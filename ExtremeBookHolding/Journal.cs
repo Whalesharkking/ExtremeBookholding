@@ -6,17 +6,16 @@ namespace ExtremeBookHolding
 {
     public class Journal : INotifyPropertyChanged
     {
-        private Account account;
+        private Account _account;
         public Account Account
         {
-            get => account;
+            get => _account;
             set
             {
-                if (account != value)
-                {
-                    account = value;
-                    RaisePropertyChanged();
-                }
+                if (_account == value)
+                    return;
+                _account = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -26,11 +25,10 @@ namespace ExtremeBookHolding
             get => sollAccountingRecords;
             set
             {
-                if (sollAccountingRecords != value)
-                {
-                    sollAccountingRecords = value;
-                    RaisePropertyChanged();
-                }
+                if (sollAccountingRecords == value)
+                    return;
+                sollAccountingRecords = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -40,11 +38,10 @@ namespace ExtremeBookHolding
             get => habenAccountingRecords;
             set
             {
-                if (habenAccountingRecords != value)
-                {
-                    habenAccountingRecords = value;
-                    RaisePropertyChanged();
-                }
+                if (habenAccountingRecords == value)
+                    return;
+                habenAccountingRecords = value;
+                RaisePropertyChanged();
             }
         }
 
