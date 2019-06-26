@@ -18,30 +18,30 @@ namespace ExtremeBookHolding.Core
             }
         }
 
-        private ObservableCollection<AccountingRecord> sollAccountingRecords;
+        private ObservableCollection<AccountingRecord> _debitAccountingRecords;
 
-        public ObservableCollection<AccountingRecord> SOLLAccountingRecords
+        public ObservableCollection<AccountingRecord> DebitAccountingRecords
         {
-            get => sollAccountingRecords;
+            get => _debitAccountingRecords;
             set
             {
-                if (sollAccountingRecords == value)
+                if (_debitAccountingRecords == value)
                     return;
-                sollAccountingRecords = value;
+                _debitAccountingRecords = value;
                 RaisePropertyChanged();
             }
         }
 
-        private ObservableCollection<AccountingRecord> habenAccountingRecords;
+        private ObservableCollection<AccountingRecord> _creditAccountingRecords;
 
-        public ObservableCollection<AccountingRecord> HABENAccountingRecords
+        public ObservableCollection<AccountingRecord> CreditAccountingRecords
         {
-            get => habenAccountingRecords;
+            get => _creditAccountingRecords;
             set
             {
-                if (habenAccountingRecords == value)
+                if (_creditAccountingRecords == value)
                     return;
-                habenAccountingRecords = value;
+                _creditAccountingRecords = value;
                 RaisePropertyChanged();
             }
         }

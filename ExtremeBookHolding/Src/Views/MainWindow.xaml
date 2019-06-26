@@ -46,7 +46,7 @@
                         <Label Content="Passiven" HorizontalAlignment="Right" />
                     </Grid>
                     <StackPanel Grid.Row="3" Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding OrderedActivAccountingRecords}">
+                        <ItemsControl ItemsSource="{Binding OrderedActiveAccountingRecords}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="15,0">
@@ -59,10 +59,10 @@
                     </StackPanel>
                     <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Orientation="Vertical">
                         <Separator HorizontalAlignment="Right" Width="100" />
-                        <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding ActivAccountingRecordsSummary}" />
+                        <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding ActiveAccountingRecordsSummary}" />
                     </StackPanel>
                     <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding OrderedPassivAccountingRecords}">
+                        <ItemsControl ItemsSource="{Binding OrderedPassiveAccountingRecords}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="15,0">
@@ -75,7 +75,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Vertical">
                         <Separator HorizontalAlignment="Left" Width="100" />
-                        <TextBlock Margin="15,0" TextAlignment="Left" Text="{Binding PassivAccountingRecordsSummary}" />
+                        <TextBlock Margin="15,0" TextAlignment="Left" Text="{Binding PassiveAccountingRecordsSummary}" />
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -107,7 +107,7 @@
                                         <Label Content="Passiven" HorizontalAlignment="Right" />
                                     </Grid>
                                     <StackPanel Grid.Row="2" Orientation="Vertical">
-                                        <ItemsControl ItemsSource="{Binding SOLLAccountingRecords}">
+                                        <ItemsControl ItemsSource="{Binding DebitAccountingRecords}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid Margin="15,0">
@@ -122,11 +122,11 @@
                                     <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Orientation="Vertical">
                                         <Separator HorizontalAlignment="Right" Width="100" />
                                         <TextBlock Margin="15,0" TextAlignment="Right"
-                                                   Text="{Binding ActivAccountingRecordsSummary}" />
+                                                   Text="{Binding ActiveAccountingRecordsSummary}" />
                                     </StackPanel>
 
                                     <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
-                                        <ItemsControl ItemsSource="{Binding HABENAccountingRecords}">
+                                        <ItemsControl ItemsSource="{Binding CreditAccountingRecords}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid Margin="15,0">
@@ -142,7 +142,7 @@
                                                 Orientation="Vertical">
                                         <Separator HorizontalAlignment="Left" Width="100" />
                                         <TextBlock Margin="15,0" TextAlignment="Left"
-                                                   Text="{Binding PassivAccountingRecordsSummary}" />
+                                                   Text="{Binding PassiveAccountingRecordsSummary}" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
