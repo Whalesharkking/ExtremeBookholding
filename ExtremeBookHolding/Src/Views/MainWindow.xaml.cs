@@ -50,6 +50,7 @@ namespace ExtremeBookHolding.Views
         public void LoadJournalExampleData()
         {
             foreach (Account account in accounts.ItemsSource)
+                //JournalList.AddBuchungssatz()
                 JournalList.Add(new Journal
                 {
                     Account = account,
