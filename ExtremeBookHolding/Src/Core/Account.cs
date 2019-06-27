@@ -1,10 +1,12 @@
-﻿namespace ExtremeBookHolding.Core
+﻿using System;
+
+namespace ExtremeBookHolding.Core
 {
     public enum AccountType
     {
         Active = 1,
-        Passive = 2,
-        Both = 3
+        Passive = 3,
+        Both = 5
     }
 
     public enum AccountName
@@ -28,7 +30,9 @@
 
         public Account(AccountName accountName)
         {
-            Id = (int) accountName;
+            Id = (int) AccountName;
+            AccountName = accountName;
+            Type = (AccountType) (int) (Id - Math.Pow(2, (int) Math.Sqrt(Id)));
         }
 
         public int Id { get; }
