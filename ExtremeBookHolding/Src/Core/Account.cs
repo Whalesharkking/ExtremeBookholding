@@ -2,6 +2,7 @@
 
 namespace ExtremeBookHolding.Core
 {
+
     public enum AccountType
     {
         Active = 1,
