@@ -9,8 +9,6 @@ namespace ExtremeBookHolding.Core
         public decimal CreditAccountingRecordsSummary => CreditAccountingRecords.Sum(x => x.Value);
 
 
-
-
         private Account _account;
 
         public Account Account

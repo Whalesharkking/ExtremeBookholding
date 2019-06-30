@@ -11,14 +11,16 @@ namespace ExtremeBookHolding.Core
     {
         private static int lastID = 0;
 
-        public static void AddBuchungssatz(this ObservableCollection<Journal> journals, AccountingRecord accountingRecord, bool addToCredit,bool keepCurrentLastID = false)
+        public static void AddBuchungssatz(this ObservableCollection<Journal> journals,
+            AccountingRecord accountingRecord, bool addToCredit, bool keepCurrentLastID = false)
         {
             var journal = journals.FirstOrDefault(x => x.Account == accountingRecord.Account);
             if (journal == null)
             {
-                journal = new Journal() { Account = accountingRecord.Account };
+                journal = new Journal() {Account = accountingRecord.Account};
                 journals.Add(journal);
             }
+
             if (keepCurrentLastID)
             {
                 accountingRecord.ID = lastID;
@@ -30,10 +32,11 @@ namespace ExtremeBookHolding.Core
 
             if (addToCredit)
             {
-                if(journal.CreditAccountingRecords == null)
+                if (journal.CreditAccountingRecords == null)
                 {
                     journal.CreditAccountingRecords = new ObservableCollection<AccountingRecord>();
                 }
+
                 journal.CreditAccountingRecords.Add(accountingRecord);
             }
             else
@@ -42,15 +45,16 @@ namespace ExtremeBookHolding.Core
                 {
                     journal.DebitAccountingRecords = new ObservableCollection<AccountingRecord>();
                 }
+
                 journal.DebitAccountingRecords.Add(accountingRecord);
             }
-            
         }
 
-        public static void AddBuchungssatz(this ObservableCollection<Journal> journals, AccountingRecord debitAccount, AccountingRecord creditAccount)
+        public static void AddBuchungssatz(this ObservableCollection<Journal> journals, AccountingRecord debitAccount,
+            AccountingRecord creditAccount)
         {
             AddBuchungssatz(journals, debitAccount, false);
-            AddBuchungssatz(journals, creditAccount, true,true);
+            AddBuchungssatz(journals, creditAccount, true, true);
         }
     }
 }

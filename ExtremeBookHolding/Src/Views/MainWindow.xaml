@@ -85,26 +85,29 @@
             <TabItem Header="Hauptbuch und Schlussbilanz">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <DockPanel>
-                        <Label Content="Höhe:"/>
-                        <xctk:IntegerUpDown HorizontalAlignment="Left" Value="200" Name="journalHeight" Width="50" Margin="0,0,5,0"/>
-                        <Label Content="Breite:"/>
-                        <xctk:IntegerUpDown HorizontalAlignment="Left" Name="journalWidth" Width="50" Margin="0,0,5,0"/>
+                        <Label Content="Höhe:" />
+                        <xctk:IntegerUpDown HorizontalAlignment="Left" Value="200" Name="journalHeight" Width="50"
+                                            Margin="0,0,5,0" />
+                        <Label Content="Breite:" />
+                        <xctk:IntegerUpDown HorizontalAlignment="Left" Name="journalWidth" Width="50" Margin="0,0,5,0" />
                     </DockPanel>
-                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding JournalList}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel Background="Transparent"  Margin="5"/>
+                                    <WrapPanel Background="Transparent" Margin="5" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="20" Height="{Binding ElementName=journalHeight ,Path=Value}" Width="{Binding ElementName=journalWidth ,Path=Value}" >
+                                    <Grid Margin="20" Height="{Binding ElementName=journalHeight ,Path=Value}"
+                                          Width="{Binding ElementName=journalWidth ,Path=Value}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
@@ -116,8 +119,8 @@
                                         </Grid.RowDefinitions>
                                         <Separator Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
                                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
-                                               Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center"
-                                               VerticalAlignment="Stretch" />
+                                                   Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                                                   VerticalAlignment="Stretch" />
                                         <Grid Grid.Row="1" Grid.ColumnSpan="2">
                                             <Label Content="Aktiven" />
                                             <Label Content="{Binding Account.Name}" HorizontalAlignment="Center" />
@@ -129,8 +132,9 @@
                                                     <DataTemplate>
                                                         <Grid Margin="15,0">
                                                             <TextBlock HorizontalAlignment="Left"
-                                                                   Text="{Binding ID}"  ToolTip="{Binding Text}"/>
-                                                            <TextBlock HorizontalAlignment="Right" Text="{Binding Value}" />
+                                                                       Text="{Binding ID}" ToolTip="{Binding Text}" />
+                                                            <TextBlock HorizontalAlignment="Right"
+                                                                       Text="{Binding Value}" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
@@ -139,7 +143,7 @@
                                         <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Orientation="Vertical">
                                             <Separator HorizontalAlignment="Right" Width="100" />
                                             <TextBlock Margin="15,0" TextAlignment="Right"
-                                                   Text="{Binding DebitAccountingRecordsSummary}" />
+                                                       Text="{Binding DebitAccountingRecordsSummary}" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
@@ -148,18 +152,19 @@
                                                     <DataTemplate>
                                                         <Grid Margin="15,0">
                                                             <TextBlock HorizontalAlignment="Right"
-                                                                   Text="{Binding ID}" ToolTip="{Binding Text}" />
-                                                            <TextBlock HorizontalAlignment="Left" Text="{Binding Value}" />
+                                                                       Text="{Binding ID}" ToolTip="{Binding Text}" />
+                                                            <TextBlock HorizontalAlignment="Left"
+                                                                       Text="{Binding Value}" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                         </StackPanel>
                                         <StackPanel Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"
-                                                Orientation="Vertical">
+                                                    Orientation="Vertical">
                                             <Separator HorizontalAlignment="Left" Width="100" />
                                             <TextBlock Margin="15,0" TextAlignment="Left"
-                                                   Text="{Binding CreditAccountingRecordsSummary}" />
+                                                       Text="{Binding CreditAccountingRecordsSummary}" />
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>

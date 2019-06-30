@@ -51,9 +51,12 @@ namespace ExtremeBookHolding.Views
         {
             foreach (Account account in accounts.ItemsSource)
             {
-                JournalList.AddBuchungssatz(new AccountingRecord { Account = account, Text = "Test1Haben", Value = 11 }, new AccountingRecord { Account = account, Text = "Test1Soll", Value = 101 });
-                JournalList.AddBuchungssatz(new AccountingRecord { Account = account, Text = "Test2Haben", Value = 22 }, new AccountingRecord { Account = account, Text = "Test2Soll", Value = 202 });
-                JournalList.AddBuchungssatz(new AccountingRecord { Account = account, Text = "Test3Haben", Value = 33 }, new AccountingRecord { Account = account, Text = "Test3Soll", Value = 303 });
+                JournalList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
+                    new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101});
+                JournalList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
+                    new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202});
+                JournalList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
+                    new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
 
                 //JournalList.Add(new Journal
                 //{
@@ -117,6 +120,7 @@ namespace ExtremeBookHolding.Views
                     {
                         Passive(selectedAccount);
                     }
+
                     break;
             }
         }
@@ -144,13 +148,13 @@ namespace ExtremeBookHolding.Views
             if (accountingRecord != null)
             {
                 if (accountValue.Value != null)
-                    accountingRecord.Value += (decimal)accountValue.Value;
+                    accountingRecord.Value += (decimal) accountValue.Value;
             }
             else
             {
                 if (accountValue.Value != null)
                     accountingRecordList.Add(new AccountingRecord
-                    { Account = account, Value = (decimal)accountValue.Value, Text = "Anfangsbilanz" });
+                        {Account = account, Value = (decimal) accountValue.Value, Text = "Anfangsbilanz"});
             }
         }
     }

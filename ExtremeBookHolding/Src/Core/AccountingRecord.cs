@@ -5,13 +5,15 @@
         //private static int lastId;
         //public AccountingRecord()
         //{
-            //ID = lastId++;
+        //ID = lastId++;
         //}
 
         private int id;
+
         public int ID
         {
-            get => id; set
+            get => id;
+            set
             {
                 if (id != value)
                 {
@@ -20,7 +22,6 @@
                 }
             }
         }
-
 
 
         private Account _account;

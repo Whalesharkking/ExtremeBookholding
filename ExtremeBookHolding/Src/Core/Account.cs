@@ -2,7 +2,6 @@
 
 namespace ExtremeBookHolding.Core
 {
-
     public enum AccountType
     {
         Active = 1,
@@ -33,7 +32,7 @@ namespace ExtremeBookHolding.Core
         {
             Id = (int) accountName;
             AccountName = accountName;
-            Type = (AccountType) (int) (Id - Math.Pow(2, (int)Math.Log(Id, 2)));
+            Type = (AccountType) (int) (Id - Math.Pow(2, (int) Math.Log(Id, 2)));
         }
 
         public int Id { get; }
