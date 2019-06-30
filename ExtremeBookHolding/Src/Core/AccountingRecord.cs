@@ -2,6 +2,27 @@
 {
     public class AccountingRecord : PropertyChangedProperty
     {
+        //private static int lastId;
+        //public AccountingRecord()
+        //{
+            //ID = lastId++;
+        //}
+
+        private int id;
+        public int ID
+        {
+            get => id; set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+
+
         private Account _account;
 
         public Account Account
@@ -9,10 +30,11 @@
             get => _account;
             set
             {
-                if (_account == value)
-                    return;
-                _account = value;
-                RaisePropertyChanged();
+                if (_account != value)
+                {
+                    _account = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -23,10 +45,11 @@
             get => _value;
             set
             {
-                if (_value == value)
-                    return;
-                _value = value;
-                RaisePropertyChanged();
+                if (_value != value)
+                {
+                    _value = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -37,10 +60,11 @@
             get => _text;
             set
             {
-                if (_text == value)
-                    return;
-                _text = value;
-                RaisePropertyChanged();
+                if (_text != value)
+                {
+                    _text = value;
+                    RaisePropertyChanged();
+                }
             }
         }
     }

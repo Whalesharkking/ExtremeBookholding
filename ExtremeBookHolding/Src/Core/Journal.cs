@@ -1,9 +1,16 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ExtremeBookHolding.Core
 {
     public class Journal : PropertyChangedProperty
     {
+        public decimal DebitAccountingRecordsSummary => DebitAccountingRecords.Sum(x => x.Value);
+        public decimal CreditAccountingRecordsSummary => CreditAccountingRecords.Sum(x => x.Value);
+
+
+
+
         private Account _account;
 
         public Account Account
@@ -11,10 +18,11 @@ namespace ExtremeBookHolding.Core
             get => _account;
             set
             {
-                if (_account == value)
-                    return;
-                _account = value;
-                RaisePropertyChanged();
+                if (_account != value)
+                {
+                    _account = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -25,10 +33,12 @@ namespace ExtremeBookHolding.Core
             get => _debitAccountingRecords;
             set
             {
-                if (_debitAccountingRecords == value)
-                    return;
-                _debitAccountingRecords = value;
-                RaisePropertyChanged();
+                if (_debitAccountingRecords != value)
+                {
+                    _debitAccountingRecords = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(DebitAccountingRecordsSummary));
+                }
             }
         }
 
@@ -39,10 +49,12 @@ namespace ExtremeBookHolding.Core
             get => _creditAccountingRecords;
             set
             {
-                if (_creditAccountingRecords == value)
-                    return;
-                _creditAccountingRecords = value;
-                RaisePropertyChanged();
+                if (_creditAccountingRecords != value)
+                {
+                    _creditAccountingRecords = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(CreditAccountingRecordsSummary));
+                }
             }
         }
     }

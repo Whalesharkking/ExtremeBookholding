@@ -50,23 +50,28 @@ namespace ExtremeBookHolding.Views
         public void LoadJournalExampleData()
         {
             foreach (Account account in accounts.ItemsSource)
-                //JournalList.AddBuchungssatz()
-                JournalList.Add(new Journal
-                {
-                    Account = account,
-                    CreditAccountingRecords = new ObservableCollection<AccountingRecord>
-                    {
-                        new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
-                        new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
-                        new AccountingRecord {Account = account, Text = "Test2Haben", Value = 33}
-                    },
-                    DebitAccountingRecords = new ObservableCollection<AccountingRecord>
-                    {
-                        new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101},
-                        new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202},
-                        new AccountingRecord {Account = account, Text = "Test2Soll", Value = 303}
-                    }
-                });
+            {
+                JournalList.AddBuchungssatz(new AccountingRecord { Account = account, Text = "Test1Haben", Value = 11 }, new AccountingRecord { Account = account, Text = "Test1Soll", Value = 101 });
+                JournalList.AddBuchungssatz(new AccountingRecord { Account = account, Text = "Test2Haben", Value = 22 }, new AccountingRecord { Account = account, Text = "Test2Soll", Value = 202 });
+                JournalList.AddBuchungssatz(new AccountingRecord { Account = account, Text = "Test3Haben", Value = 33 }, new AccountingRecord { Account = account, Text = "Test3Soll", Value = 303 });
+
+                //JournalList.Add(new Journal
+                //{
+                //    Account = account,
+                //    CreditAccountingRecords = new ObservableCollection<AccountingRecord>
+                //    {
+                //        new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
+                //        new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
+                //        new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33}
+                //    },
+                //    DebitAccountingRecords = new ObservableCollection<AccountingRecord>
+                //    {
+                //        new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101},
+                //        new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202},
+                //        new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303}
+                //    }
+                //});
+            }
         }
 
 
@@ -119,13 +124,13 @@ namespace ExtremeBookHolding.Views
             if (accountingRecord != null)
             {
                 if (accountValue.Value != null)
-                    accountingRecord.Value += (decimal) accountValue.Value;
+                    accountingRecord.Value += (decimal)accountValue.Value;
             }
             else
             {
                 if (accountValue.Value != null)
                     accountingRecordList.Add(new AccountingRecord
-                        {Account = account, Value = (decimal) accountValue.Value, Text = "Anfangsbilanz"});
+                    { Account = account, Value = (decimal)accountValue.Value, Text = "Anfangsbilanz" });
             }
         }
     }
