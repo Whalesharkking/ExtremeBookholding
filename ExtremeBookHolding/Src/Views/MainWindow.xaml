@@ -28,12 +28,10 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Separator Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
-                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Grid.Row="3"
-                               Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
                     <StackPanel Grid.ColumnSpan="2" VerticalAlignment="Center" Orientation="Horizontal">
                         <Label Content="Konto" />
-                        <ComboBox x:Name="accounts" Margin="5" Width="150" />
+                        <ComboBox x:Name="accounts" ItemsSource="{Binding AccountList}" DisplayMemberPath="Name" Margin="5" Width="150" />
                         <Label Margin="20,0,0,0" Content="Betrag" />
                         <xctk:DecimalUpDown x:Name="accountValue" Margin="5" MinWidth="80" />
                         <Label Content="CHF" />
@@ -80,7 +78,70 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Journal">
-                <Grid />
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Neuer Geschäftsfall" HorizontalAlignment="Left" Click="Button_Click"/>
+                    <Grid  Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Stretch" />
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1"/>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="3"/>
+                        <Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.ColumnSpan="5" />
+                        <Label Content="Nr." VerticalAlignment="Top"/>
+                        <Label Content="Geschäftsfälle" Grid.Column="1" VerticalAlignment="Top"/>
+                        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.ColumnSpan="2">
+                            <Label Content="Buchungssatz"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Soll"/>
+                                <Label Content="Haben" Grid.Column="1" />
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.ColumnSpan="2" />
+                            </Grid>
+                        </StackPanel>
+                        <Label Content="Betrag" VerticalAlignment="Top" Grid.Column="4"/>
+                    </Grid>
+                    <StackPanel  Grid.Row="3" >
+                        <ItemsControl Grid.Row="3" ItemsSource="{Binding JournalList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="4*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="150"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Stretch" />
+                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1"/>
+                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" />
+                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="3"/>
+                                        <Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.ColumnSpan="5" />
+                                        <Label Content="{Binding ID}" VerticalAlignment="Center"/>
+                                        <Label Content="{Binding Text}" Grid.Column="1" VerticalAlignment="Center"/>
+                                        <ComboBox ItemsSource="{Binding AccountList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedValue="{Binding DebitAccount}" SelectedItem="{Binding DebitAccount}" IsSynchronizedWithCurrentItem="True"  DisplayMemberPath="Name" Grid.Column="2" VerticalAlignment="Center" Margin="5"/>
+                                        <ComboBox ItemsSource="{Binding AccountList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedItem="{Binding CreditAccount}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Grid.Column="3" VerticalAlignment="Center" Margin="5"/>
+                                        <xctk:DecimalUpDown Value="{Binding Value}" VerticalAlignment="Center" Grid.Column="4"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
             </TabItem>
             <TabItem Header="Hauptbuch und Schlussbilanz">
                 <Grid>
@@ -90,14 +151,13 @@
                     </Grid.RowDefinitions>
                     <DockPanel>
                         <Label Content="Höhe:" />
-                        <xctk:IntegerUpDown HorizontalAlignment="Left" Value="200" Name="journalHeight" Width="50"
-                                            Margin="0,0,5,0" />
+                        <xctk:IntegerUpDown HorizontalAlignment="Left" Value="200" Name="ledgerAccountHeight" Width="50" Margin="0,5,5,5" />
                         <Label Content="Breite:" />
-                        <xctk:IntegerUpDown HorizontalAlignment="Left" Name="journalWidth" Width="50" Margin="0,0,5,0" />
+                        <xctk:IntegerUpDown HorizontalAlignment="Left" Name="ledgerAccountWidth" Width="50" Margin="0,5,5,5" />
                     </DockPanel>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
                                   VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding JournalList}">
+                        <ItemsControl ItemsSource="{Binding LedgerAccountList}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Background="Transparent" Margin="5" />
@@ -106,8 +166,8 @@
 
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="20" Height="{Binding ElementName=journalHeight ,Path=Value}"
-                                          Width="{Binding ElementName=journalWidth ,Path=Value}">
+                                    <Grid Margin="20" Height="{Binding ElementName=ledgerAccountHeight ,Path=Value}"
+                                          Width="{Binding ElementName=ledgerAccountWidth ,Path=Value}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />

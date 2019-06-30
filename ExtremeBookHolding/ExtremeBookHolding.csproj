@@ -77,7 +77,8 @@
     <Compile Include="Src\Core\Account.cs" />
     <Compile Include="Src\Core\AccountingRecord.cs" />
     <Compile Include="Src\Core\Journal.cs" />
-    <Compile Include="Src\Core\JournalHelper.cs" />
+    <Compile Include="Src\Core\LedgerAccount.cs" />
+    <Compile Include="Src\Core\LedgerAccountHelper.cs" />
     <Compile Include="Src\Core\PropertyChangedProperty.cs" />
     <Compile Include="Src\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

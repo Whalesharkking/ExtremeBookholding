@@ -1,57 +1,93 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ExtremeBookHolding.Core
 {
-    public class Journal : PropertyChangedProperty
+    public class Journal:PropertyChangedProperty
     {
-        public decimal DebitAccountingRecordsSummary => DebitAccountingRecords.Sum(x => x.Value);
-        public decimal CreditAccountingRecordsSummary => CreditAccountingRecords.Sum(x => x.Value);
+        private static int lastId = 0;
 
-
-        private Account _account;
-
-        public Account Account
+        public Journal()
         {
-            get => _account;
-            set
+            ID = ++lastId;
+        }
+
+        private int id;
+
+        public int ID
+        {
+            get => id;
+            private set
             {
-                if (_account != value)
+                if (id != value)
                 {
-                    _account = value;
+                    id = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        private ObservableCollection<AccountingRecord> _debitAccountingRecords;
+        private Account _debitAccount;
 
-        public ObservableCollection<AccountingRecord> DebitAccountingRecords
+        public Account DebitAccount
         {
-            get => _debitAccountingRecords;
+            get => _debitAccount;
             set
             {
-                if (_debitAccountingRecords != value)
+                if (_debitAccount != value)
                 {
-                    _debitAccountingRecords = value;
+                    _debitAccount = value;
                     RaisePropertyChanged();
-                    RaisePropertyChanged(nameof(DebitAccountingRecordsSummary));
+                    //TODO LedgerAccountHelper.AddBuchungssatz()
                 }
             }
         }
 
-        private ObservableCollection<AccountingRecord> _creditAccountingRecords;
+        private Account _creditAccount;
 
-        public ObservableCollection<AccountingRecord> CreditAccountingRecords
+        public Account CreditAccount
         {
-            get => _creditAccountingRecords;
+            get => _creditAccount;
             set
             {
-                if (_creditAccountingRecords != value)
+                if (_creditAccount != value)
                 {
-                    _creditAccountingRecords = value;
+                    _creditAccount = value;
                     RaisePropertyChanged();
-                    RaisePropertyChanged(nameof(CreditAccountingRecordsSummary));
+                    //TODO LedgerAccountHelper.AddBuchungssatz()
+                }
+            }
+        }
+
+        private decimal _value;
+
+        public decimal Value
+        {
+            get => _value;
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string _text;
+
+        public string Text
+        {
+            get => _text;
+            set
+            {
+                if (_text != value)
+                {
+                    _text = value;
+                    RaisePropertyChanged();
                 }
             }
         }

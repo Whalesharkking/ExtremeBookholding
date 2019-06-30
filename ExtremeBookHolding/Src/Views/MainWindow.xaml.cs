@@ -17,12 +17,12 @@ namespace ExtremeBookHolding.Views
         {
             InitializeComponent();
             DataContext = this;
-            PrepareAccountList();
             LoadJournalExampleData();
         }
 
+        public ObservableCollection<LedgerAccount> LedgerAccountList => LedgerAccountHelper.LedgerAccountList;
         public ObservableCollection<Journal> JournalList { get; set; } = new ObservableCollection<Journal>();
-
+        
 
         public decimal ActivAccountingRecordsSummary => ActiveAccountingRecords.Sum(x => x.Value);
 
@@ -49,40 +49,22 @@ namespace ExtremeBookHolding.Views
 
         public void LoadJournalExampleData()
         {
-            foreach (Account account in accounts.ItemsSource)
+            foreach (Account account in AccountList)
             {
-                JournalList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
+                LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
                     new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101});
-                JournalList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
+                LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
                     new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202});
-                JournalList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
+                LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
                     new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
 
-                //JournalList.Add(new Journal
-                //{
-                //    Account = account,
-                //    CreditAccountingRecords = new ObservableCollection<AccountingRecord>
-                //    {
-                //        new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
-                //        new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
-                //        new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33}
-                //    },
-                //    DebitAccountingRecords = new ObservableCollection<AccountingRecord>
-                //    {
-                //        new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101},
-                //        new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202},
-                //        new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303}
-                //    }
-                //});
+                JournalList.Add(new Journal { DebitAccount = account, CreditAccount = account, Text = "TestTextIstDa" });
             }
         }
 
-
-        private void PrepareAccountList()
+        public List<Account> AccountList => new List<Account>()
         {
-            accounts.ItemsSource = new List<Account>
-            {
-                new Account(AccountName.Kasse),
+             new Account(AccountName.Kasse),
                 new Account(AccountName.Post),
                 new Account(AccountName.Bank),
                 new Account(AccountName.Fll),
@@ -93,9 +75,7 @@ namespace ExtremeBookHolding.Views
                 new Account(AccountName.Darlehensschuld),
                 new Account(AccountName.Hypotheken),
                 new Account(AccountName.Eigenkapital)
-            };
-            accounts.DisplayMemberPath = nameof(accounts.Name);
-        }
+        };
 
         private void OnEnterButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -156,6 +136,12 @@ namespace ExtremeBookHolding.Views
                     accountingRecordList.Add(new AccountingRecord
                         {Account = account, Value = (decimal) accountValue.Value, Text = "Anfangsbilanz"});
             }
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
