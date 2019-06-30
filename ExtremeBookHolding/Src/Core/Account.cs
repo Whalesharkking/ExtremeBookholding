@@ -12,17 +12,17 @@ namespace ExtremeBookHolding.Core
 
     public enum AccountName
     {
-        Kasse = AccountType.Active + 1,
-        Post = AccountType.Active + 2,
-        Bank = AccountType.Both + 4,
-        Fll = AccountType.Active + 8,
-        Warenbestand = AccountType.Active + 16,
-        Mobilien = AccountType.Active + 32,
-        Immobilien = AccountType.Active + 64,
-        VLL = AccountType.Passive + 128,
-        Darlehensschuld = AccountType.Passive + 256,
-        Hypotheken = AccountType.Passive + 512,
-        Eigenkapital = AccountType.Passive + 1024
+        Kasse = AccountType.Active + 2,
+        Post = AccountType.Active + 4,
+        Bank = AccountType.Both + 8,
+        Fll = AccountType.Active + 16,
+        Warenbestand = AccountType.Active + 32,
+        Mobilien = AccountType.Active + 64,
+        Immobilien = AccountType.Active + 128,
+        VLL = AccountType.Passive + 256,
+        Darlehensschuld = AccountType.Passive + 512,
+        Hypotheken = AccountType.Passive + 1024,
+        Eigenkapital = AccountType.Passive + 2048
     }
 
     public class Account
@@ -31,9 +31,9 @@ namespace ExtremeBookHolding.Core
 
         public Account(AccountName accountName)
         {
-            Id = (int) AccountName;
+            Id = (int) accountName;
             AccountName = accountName;
-            Type = (AccountType) (int) (Id - Math.Pow(2, (int) Math.Sqrt(Id)));
+            Type = (AccountType) (int) (Id - Math.Pow(2, (int)Math.Log(Id, 2)));
         }
 
         public int Id { get; }
