@@ -103,18 +103,38 @@ namespace ExtremeBookHolding.Views
             switch (selectedAccount.Type)
             {
                 case AccountType.Active:
-                    InsertAccountRecordWithAccountValueToAccountRecordList(ActiveAccountingRecords,
-                        selectedAccount);
-                    RaisePropertyChanged(nameof(OrderedActiveAccountingRecords));
-                    RaisePropertyChanged(nameof(ActivAccountingRecordsSummary));
+                    Active(selectedAccount);
                     break;
                 case AccountType.Passive:
-                    InsertAccountRecordWithAccountValueToAccountRecordList(PassiveAccountingRecords,
-                        selectedAccount);
-                    RaisePropertyChanged(nameof(OrderedPassiveAccountingRecords));
-                    RaisePropertyChanged(nameof(PassiveAccountingRecordsSummary));
+                    Passive(selectedAccount);
+                    break;
+                case AccountType.Both:
+                    if (accountValue.Value > 0)
+                    {
+                        Active(selectedAccount);
+                    }
+                    else
+                    {
+                        Passive(selectedAccount);
+                    }
                     break;
             }
+        }
+
+        private void Active(Account selectedAccount)
+        {
+            InsertAccountRecordWithAccountValueToAccountRecordList(ActiveAccountingRecords,
+                selectedAccount);
+            RaisePropertyChanged(nameof(OrderedActiveAccountingRecords));
+            RaisePropertyChanged(nameof(ActivAccountingRecordsSummary));
+        }
+
+        private void Passive(Account selectedAccount)
+        {
+            InsertAccountRecordWithAccountValueToAccountRecordList(PassiveAccountingRecords,
+                selectedAccount);
+            RaisePropertyChanged(nameof(OrderedPassiveAccountingRecords));
+            RaisePropertyChanged(nameof(PassiveAccountingRecordsSummary));
         }
 
         private void InsertAccountRecordWithAccountValueToAccountRecordList(
