@@ -5,8 +5,8 @@ namespace ExtremeBookHolding.Core
 {
     public class LedgerAccount : PropertyChangedProperty
     {
-        public decimal DebitAccountingRecordsSummary => DebitAccountingRecords.Sum(x => x.Value);
-        public decimal CreditAccountingRecordsSummary => CreditAccountingRecords.Sum(x => x.Value);
+        public decimal? DebitAccountingRecordsSummary => DebitAccountingRecords?.Sum(x => x.Value);
+        public decimal? CreditAccountingRecordsSummary => CreditAccountingRecords?.Sum(x => x.Value);
 
 
         private Account _account;
