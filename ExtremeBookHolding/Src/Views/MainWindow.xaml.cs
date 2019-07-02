@@ -20,7 +20,7 @@ namespace ExtremeBookHolding.Views
             LoadJournalExampleData();
         }
 
-        public List<LedgerAccount> LedgerAccountList => LedgerAccountHelper.LedgerAccountList.OrderBy(x => x.Account.Id).ToList();
+        public List<LedgerAccount> LedgerAccountList => LedgerAccountHelper.LedgerAccountList/*.OrderBy(x => x.Account.Id)*/.ToList();
         public ObservableCollection<Journal> JournalList { get; set; } = new ObservableCollection<Journal>();
 
 
@@ -28,30 +28,44 @@ namespace ExtremeBookHolding.Views
         {
             get
             {
-                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 999)));
-                foreach (var item in list)
+                var currentLedgerAccountList = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 999)).ToList());
+                var tempLedgerAccountList = new List<LedgerAccount>();
+                foreach (var item in currentLedgerAccountList)
                 {
                     var sbRecord = item.CreditAccountingRecords.First(y => y.ID == 999);
-                    item.CreditAccountingRecords = new ObservableCollection<AccountingRecord>();
-                    item.CreditAccountingRecords.Add(sbRecord);
+                    tempLedgerAccountList.Add(new LedgerAccount()
+                    {
+                        Account = item.Account,
+                        CreditAccountingRecords = new ObservableCollection<AccountingRecord>() { new AccountingRecord()
+                            {
+                                Account = sbRecord.Account, ID = sbRecord.ID, Text = sbRecord.Text, Value = sbRecord.Value
+                            }}
+                    });
                 }
-                return list.OrderBy(x => x.Account.Id).ToList();
+                return tempLedgerAccountList.OrderBy(x => x.Account.Id).ToList();
             }
         }
         public List<LedgerAccount> OrderedPassivSchlussbestandRecords
         {
             get
             {
-                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == 999)));
-                foreach (var item in list)
+                var currentLedgerAccountList = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == 999)).ToList());
+                var tempLedgerAccountList = new List<LedgerAccount>();
+                foreach (var item in currentLedgerAccountList)
                 {
                     var sbRecord = item.DebitAccountingRecords.First(y => y.ID == 999);
-                    item.DebitAccountingRecords = new ObservableCollection<AccountingRecord>();
-                    item.DebitAccountingRecords.Add(sbRecord);
+                    tempLedgerAccountList.Add(new LedgerAccount()
+                    {
+                        Account = item.Account,
+                        DebitAccountingRecords = new ObservableCollection<AccountingRecord>() { new AccountingRecord()
+                            {
+                                Account = sbRecord.Account, ID = sbRecord.ID, Text = sbRecord.Text, Value = sbRecord.Value
+                            }}
+                    });
                 }
-                return list.OrderBy(x => x.Account.Id).ToList();
+                return tempLedgerAccountList.OrderBy(x => x.Account.Id).ToList();
 
-               
+
             }
         }
 
@@ -82,15 +96,15 @@ namespace ExtremeBookHolding.Views
 
         public void LoadJournalExampleData()
         {
-                //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
-                //    new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101});
-                //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
-                //    new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202});
-                //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
-                //    new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
+            //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
+            //    new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101});
+            //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
+            //    new AccountingRecord {Account = account, Text = "Test2Soll", Value = 202});
+            //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
+            //    new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
 
-                JournalList.Add(new Journal { Text = "Verkauf einer alten Maschine gegen Barzahlung für 1'500Fr." });
-                JournalList.Add(new Journal { Text = "Immobilienkauf durch eine Hypothek von 1'000'000Fr." });
+            JournalList.Add(new Journal { Text = "Verkauf einer alten Maschine gegen Barzahlung für 1'500Fr." });
+            JournalList.Add(new Journal { Text = "Immobilienkauf durch eine Hypothek von 1'000'000Fr." });
         }
 
         public List<Account> AccountList => new List<Account>()
@@ -175,11 +189,11 @@ namespace ExtremeBookHolding.Views
                     {
                         if (!isActiv)
                         {
-                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = ledgerDebitRecord.Text, Value = accountingRecord.Value });
+                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = "Anfangsbilanz", Value = accountingRecord.Value });
                         }
                         else
                         {
-                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { DebitAccount = account.Id, Text = ledgerDebitRecord.Text, Value = accountingRecord.Value });
+                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { DebitAccount = account.Id, Text = "Anfangsbilanz", Value = accountingRecord.Value });
                         }
                     }
                 }

@@ -174,7 +174,7 @@
                     </DockPanel>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
                                   VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding LedgerAccountList, UpdateSourceTrigger=PropertyChanged}">
+                        <ItemsControl ItemsSource="{Binding LedgerAccountList}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Background="Transparent" Margin="5" />
