@@ -80,8 +80,6 @@ namespace ExtremeBookHolding.Views
 
         public void LoadJournalExampleData()
         {
-            foreach (Account account in AccountList)
-            {
                 //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test1Haben", Value = 11},
                 //    new AccountingRecord {Account = account, Text = "Test1Soll", Value = 101});
                 //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test2Haben", Value = 22},
@@ -89,8 +87,8 @@ namespace ExtremeBookHolding.Views
                 //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
                 //    new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
 
-                JournalList.Add(new Journal { Text = "Die Rechnung von 100Fr. wird per Bank bezahlt" });
-            }
+                JournalList.Add(new Journal { Text = "Verkauf einer alten Maschinegegen Barzahlung für 1'500Fr." });
+                JournalList.Add(new Journal { Text = "Immobilienkauf durch eine Hypothek von 1'000'000Fr." });
         }
 
         public List<Account> AccountList => new List<Account>()
