@@ -87,7 +87,7 @@ namespace ExtremeBookHolding.Views
                 //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
                 //    new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
 
-                JournalList.Add(new Journal { Text = "Verkauf einer alten Maschinegegen Barzahlung für 1'500Fr." });
+                JournalList.Add(new Journal { Text = "Verkauf einer alten Maschine gegen Barzahlung für 1'500Fr." });
                 JournalList.Add(new Journal { Text = "Immobilienkauf durch eine Hypothek von 1'000'000Fr." });
         }
 
