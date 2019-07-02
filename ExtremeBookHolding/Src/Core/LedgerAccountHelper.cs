@@ -66,9 +66,6 @@ namespace ExtremeBookHolding.Core
                     debitLedgerAccount.DebitAccountingRecords = new ObservableCollection<AccountingRecord>();
                 }
                 debitLedgerAccount.DebitAccountingRecords.Add(new AccountingRecord() { Account = debitLedgerAccount.Account, ID = journal.ID, Text = journal.Text, Value = journal.Value });
-
-               
-                
             }
 
 

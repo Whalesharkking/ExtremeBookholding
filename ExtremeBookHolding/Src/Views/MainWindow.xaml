@@ -271,7 +271,7 @@
                                     <DataTemplate>
                                         <Grid Margin="15,0">
                                             <TextBlock HorizontalAlignment="Left" Text="{Binding Account.Name}" />
-                                            <TextBlock HorizontalAlignment="Right" Text="{Binding DebitAccountingRecords[0].Value}" />
+                                            <TextBlock HorizontalAlignment="Right" Text="{Binding CreditAccountingRecords[0].Value}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -279,7 +279,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Orientation="Vertical">
                             <Separator HorizontalAlignment="Right" Width="100" />
-                            <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding DebitAccountingRecordsSummary}" />
+                            <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding ActiveSchlussbestandRecordsSummary , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                             <ItemsControl ItemsSource="{Binding OrderedPassivSchlussbestandRecords, UpdateSourceTrigger=PropertyChanged}">
@@ -287,7 +287,7 @@
                                     <DataTemplate>
                                         <Grid Margin="15,0">
                                             <TextBlock HorizontalAlignment="Right" Text="{Binding Account.Name}" />
-                                            <TextBlock HorizontalAlignment="Left"  Text="{Binding CreditAccountingRecords[0].Value}" />
+                                            <TextBlock HorizontalAlignment="Left"  Text="{Binding DebitAccountingRecords[0].Value}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -295,7 +295,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Vertical">
                             <Separator HorizontalAlignment="Left" Width="100" />
-                            <TextBlock Margin="15,0" TextAlignment="Left" Text="{Binding CreditAccountingRecordsSummary}" />
+                            <TextBlock Margin="15,0" TextAlignment="Left" Text="{Binding PassivSchlussbestandRecordsSummary, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                         </StackPanel>
                     </Grid>
                 </Grid>

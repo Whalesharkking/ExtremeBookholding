@@ -24,6 +24,8 @@ namespace ExtremeBookHolding.Views
         public ObservableCollection<Journal> JournalList { get; set; } = new ObservableCollection<Journal>();
 
 
+        public decimal ActiveSchlussbestandRecordsSummary => OrderedActiveSchlussbestandRecords.Sum(x => x.CreditAccountingRecords.Sum(y => y.Value));
+
         public List<LedgerAccount> OrderedActiveSchlussbestandRecords
         {
             get
@@ -45,6 +47,9 @@ namespace ExtremeBookHolding.Views
                 return tempLedgerAccountList.OrderBy(x => x.Account.Id).ToList();
             }
         }
+
+        public decimal PassivSchlussbestandRecordsSummary => OrderedPassivSchlussbestandRecords.Sum(x => x.DebitAccountingRecords.Sum(y => y.Value));
+
         public List<LedgerAccount> OrderedPassivSchlussbestandRecords
         {
             get
@@ -170,88 +175,94 @@ namespace ExtremeBookHolding.Views
             ObservableCollection<AccountingRecord> accountingRecordList, Account account, bool isActiv = true)
         {
             var accountingRecord = accountingRecordList.FirstOrDefault(x => x.Account == account);
-            if (accountingRecord != null)
+            if (accountValue.Value != null)
             {
-                if (accountValue.Value != null)
+                accountValue.Value = (decimal)accountValue.Value < 0 ? -1 * (decimal)accountValue.Value : (decimal)accountValue.Value;
+            }
+                if (accountingRecord != null)
                 {
-                    accountingRecord.Value += (decimal)accountValue.Value;
-                    var ledgerCreditRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account.Id == account.Id && x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 0))?.CreditAccountingRecords.First(y => y.ID == 0);
-                    var ledgerDebitRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account == account && x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == 0))?.DebitAccountingRecords.First(y => y.ID == 0);
-                    if (ledgerCreditRecord != null)
+                    if (accountValue.Value != null)
                     {
-                        ledgerCreditRecord.Value = accountingRecord.Value;
-                    }
-                    else if (ledgerDebitRecord != null)
-                    {
-                        ledgerDebitRecord.Value = accountingRecord.Value;
-                    }
-                    else
-                    {
-                        if (!isActiv)
+                        accountingRecord.Value = (decimal)accountValue.Value;
+                        var ledgerCreditRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account.Id == account.Id && x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 0))?.CreditAccountingRecords.First(y => y.ID == 0);
+                        var ledgerDebitRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account == account && x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == 0))?.DebitAccountingRecords.First(y => y.ID == 0);
+                        if (ledgerCreditRecord != null)
                         {
-                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = "Anfangsbilanz", Value = accountingRecord.Value });
+                            ledgerCreditRecord.Value = accountingRecord.Value;
+                        }
+                        else if (ledgerDebitRecord != null)
+                        {
+                            ledgerDebitRecord.Value = accountingRecord.Value;
                         }
                         else
                         {
-                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { DebitAccount = account.Id, Text = "Anfangsbilanz", Value = accountingRecord.Value });
+                            if (!isActiv)
+                            {
+                                LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = "Anfangsbilanz", Value = accountingRecord.Value });
+                            }
+                            else
+                            {
+                                LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { DebitAccount = account.Id, Text = "Anfangsbilanz", Value = accountingRecord.Value });
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (accountValue.Value != null)
+                else
                 {
-                    var newRecord = new AccountingRecord
-                    { Account = account, Value = (decimal)accountValue.Value, Text = "Anfangsbilanz" };
-                    accountingRecordList.Add(newRecord);
-                    if (!isActiv)
+                    if (accountValue.Value != null)
                     {
-                        LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = newRecord.Text, Value = newRecord.Value });
+                        var newRecord = new AccountingRecord
+                        { Account = account, Value = (decimal)accountValue.Value, Text = "Anfangsbilanz" };
+                        accountingRecordList.Add(newRecord);
+                        if (!isActiv)
+                        {
+                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = newRecord.Text, Value = newRecord.Value });
+                        }
+                        else
+                        {
+                            LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { DebitAccount = account.Id, Text = newRecord.Text, Value = newRecord.Value });
+                        }
                     }
-                    else
+                }
+
+            }
+
+
+            private void Button_Click(object sender, RoutedEventArgs e)
+            {
+                JournalList.Add(new Journal());
+            }
+
+            private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+            {
+                if ((sender as System.Windows.Controls.TabControl).SelectedIndex == 2)
+                {
+                    LedgerAccountHelper.LedgerAccountList.LoadSchlussbestand();
+                    RaisePropertyChanged(nameof(LedgerAccountList));
+                    RaisePropertyChanged(nameof(OrderedActiveSchlussbestandRecords));
+                    RaisePropertyChanged(nameof(OrderedPassivSchlussbestandRecords));
+                    RaisePropertyChanged(nameof(ActiveSchlussbestandRecordsSummary));
+                    RaisePropertyChanged(nameof(PassivSchlussbestandRecordsSummary));
+                }
+            }
+
+            private void DeleteLast_Click(object sender, RoutedEventArgs e)
+            {
+                if (JournalList.Any())
+                {
+                    var existingCreditAccount = LedgerAccountList.FirstOrDefault(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => JournalList.LastOrDefault().ID == y.ID));
+                    if (existingCreditAccount != null)
                     {
-                        LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { DebitAccount = account.Id, Text = newRecord.Text, Value = newRecord.Value });
+                        existingCreditAccount.CreditAccountingRecords.Remove(existingCreditAccount.CreditAccountingRecords.First(y => JournalList.Last().ID == y.ID));
                     }
+
+                    var existingDebitAccount = LedgerAccountList.FirstOrDefault(x => x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => JournalList.LastOrDefault().ID == y.ID));
+                    if (existingDebitAccount != null)
+                    {
+                        existingDebitAccount.CreditAccountingRecords.Remove(existingDebitAccount.DebitAccountingRecords.First(y => JournalList.Last().ID == y.ID));
+                    }
+                    JournalList.Remove(JournalList.Last());
                 }
-            }
-
-        }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            JournalList.Add(new Journal());
-        }
-
-        private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if ((sender as System.Windows.Controls.TabControl).SelectedIndex == 2)
-            {
-                LedgerAccountHelper.LedgerAccountList.LoadSchlussbestand();
-                RaisePropertyChanged(nameof(LedgerAccountList));
-                RaisePropertyChanged(nameof(OrderedActiveSchlussbestandRecords));
-                RaisePropertyChanged(nameof(OrderedPassivSchlussbestandRecords));
-            }
-        }
-
-        private void DeleteLast_Click(object sender, RoutedEventArgs e)
-        {
-            if (JournalList.Any())
-            {
-                var existingCreditAccount = LedgerAccountList.FirstOrDefault(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => JournalList.LastOrDefault().ID == y.ID));
-                if (existingCreditAccount != null)
-                {
-                    existingCreditAccount.CreditAccountingRecords.Remove(existingCreditAccount.CreditAccountingRecords.First(y => JournalList.Last().ID == y.ID));
-                }
-
-                var existingDebitAccount = LedgerAccountList.FirstOrDefault(x => x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => JournalList.LastOrDefault().ID == y.ID));
-                if (existingDebitAccount != null)
-                {
-                    existingDebitAccount.CreditAccountingRecords.Remove(existingDebitAccount.DebitAccountingRecords.First(y => JournalList.Last().ID == y.ID));
-                }
-                JournalList.Remove(JournalList.Last());
             }
         }
     }
-}
