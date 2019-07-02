@@ -89,7 +89,7 @@ namespace ExtremeBookHolding.Views
                 //LedgerAccountList.AddBuchungssatz(new AccountingRecord {Account = account, Text = "Test3Haben", Value = 33},
                 //    new AccountingRecord {Account = account, Text = "Test3Soll", Value = 303});
 
-                JournalList.Add(new Journal { Text = "Dieser Text steht jetzt als ToolTip über der Zahl an der man irgendwas sehen kann lolDieser Text steht jetzt als ToolTip über der Zahl an der man irgendwas sehen kann lolDieser Text steht jetzt als ToolTip über der Zahl an der man irgendwas sehen kann lol" });
+                JournalList.Add(new Journal { Text = "Die Rechnung von 100Fr. wird per Bank bezahlt" });
             }
         }
 
