@@ -259,8 +259,7 @@
                         </Grid.RowDefinitions>
                         <Separator Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-                        <Button Grid.Column="2" Margin="5" Padding="10,0" HorizontalAlignment="Right" Content="Eintragen"
-                            Click="OnEnterButtonClicked" />
+                       
                         <Grid Grid.ColumnSpan="2">
                             <Label Content="Aktiven" />
                             <Label Content="Sclussbilanz" HorizontalAlignment="Center" />
@@ -280,7 +279,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Orientation="Vertical">
                             <Separator HorizontalAlignment="Right" Width="100" />
-                            <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding ActiveAccountingRecordsSummary}" />
+                            <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding DebitAccountingRecordsSummary}" />
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                             <ItemsControl ItemsSource="{Binding OrderedPassivSchlussbestandRecords, UpdateSourceTrigger=PropertyChanged}">
@@ -296,7 +295,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Vertical">
                             <Separator HorizontalAlignment="Left" Width="100" />
-                            <TextBlock Margin="15,0" TextAlignment="Left" Text="{Binding PassiveAccountingRecordsSummary}" />
+                            <TextBlock Margin="15,0" TextAlignment="Left" Text="{Binding CreditAccountingRecordsSummary}" />
                         </StackPanel>
                     </Grid>
                 </Grid>

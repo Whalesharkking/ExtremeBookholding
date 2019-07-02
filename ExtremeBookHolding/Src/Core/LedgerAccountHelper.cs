@@ -86,30 +86,6 @@ namespace ExtremeBookHolding.Core
                 }
                 creditLedgerAccount.CreditAccountingRecords.Add(new AccountingRecord() { Account = creditLedgerAccount.Account, ID = journal.ID, Text = journal.Text, Value = journal.Value });
 
-                if(creditLedgerAccount.DebitAccountingRecords != null  &&creditLedgerAccount.DebitAccountingRecords.Any(x=> x.ID == 999))
-                {
-                    creditLedgerAccount.DebitAccountingRecords.Remove(creditLedgerAccount.DebitAccountingRecords.First(x => x.ID == 999));
-                }
-                if (creditLedgerAccount.CreditAccountingRecords.Any(x => x.ID == 999))
-                {
-                    creditLedgerAccount.CreditAccountingRecords.Remove(creditLedgerAccount.CreditAccountingRecords.First(x => x.ID == 999));
-                }
-
-                var debitSum = creditLedgerAccount.DebitAccountingRecords?.Sum(x => x.Value);
-                var creditSum = creditLedgerAccount.CreditAccountingRecords.Sum(x => x.Value);
-                debitSum = creditSum == null ? 0 : creditSum;
-                if (debitSum > creditSum)
-                {
-                    creditLedgerAccount.CreditAccountingRecords.Add(new AccountingRecord() { Account = creditLedgerAccount.Account, ID = 999, Text = "Schlussbestand", Value = (decimal)debitSum - creditSum });
-                }
-                else
-                {
-                    if (creditLedgerAccount.DebitAccountingRecords == null)
-                    {
-                        creditLedgerAccount.DebitAccountingRecords = new ObservableCollection<AccountingRecord>();
-                    }
-                    creditLedgerAccount.DebitAccountingRecords.Add(new AccountingRecord() { Account = creditLedgerAccount.Account, ID = 999, Text = "Schlussbestand", Value = creditSum - (decimal)debitSum });
-                }
             }
         }
     }

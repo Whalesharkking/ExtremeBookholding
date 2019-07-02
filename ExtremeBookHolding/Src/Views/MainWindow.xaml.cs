@@ -28,7 +28,7 @@ namespace ExtremeBookHolding.Views
         {
             get
             {
-                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.DebitAccountingRecords.Any(y => y.ID == 999)));
+                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.DebitAccountingRecords!= null && x.DebitAccountingRecords.Any(y => y.ID == 999)));
                 foreach (var item in list)
                 {
                     var sbRecord = item.DebitAccountingRecords.First(y => y.ID == 999);
@@ -42,7 +42,7 @@ namespace ExtremeBookHolding.Views
         {
             get
             {
-                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.CreditAccountingRecords.Any(y => y.ID == 999)));
+                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where( x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 999)));
                 foreach (var item in list)
                 {
                     var sbRecord = item.CreditAccountingRecords.First(y => y.ID == 999);
@@ -161,8 +161,8 @@ namespace ExtremeBookHolding.Views
                 if (accountValue.Value != null)
                 {
                     accountingRecord.Value += (decimal)accountValue.Value;
-                    var ledgerCreditRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account.Id == account.Id && x.CreditAccountingRecords.Any(y => y.ID == 0))?.CreditAccountingRecords.First(y => y.ID == 0);
-                    var ledgerDebitRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account == account && x.DebitAccountingRecords.Any(y => y.ID == 0))?.DebitAccountingRecords.First(y => y.ID == 0);
+                    var ledgerCreditRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account.Id == account.Id && x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 0))?.CreditAccountingRecords.First(y => y.ID == 0);
+                    var ledgerDebitRecord = LedgerAccountHelper.LedgerAccountList.FirstOrDefault(x => x.Account == account && x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == 0))?.DebitAccountingRecords.First(y => y.ID == 0);
                     if (ledgerCreditRecord != null)
                     {
                         ledgerCreditRecord.Value = accountingRecord.Value;
@@ -173,7 +173,7 @@ namespace ExtremeBookHolding.Views
                     }
                     else
                     {
-                        if (isActiv)
+                        if (!isActiv)
                         {
                             LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = ledgerDebitRecord.Text, Value = accountingRecord.Value });
                         }
@@ -191,7 +191,7 @@ namespace ExtremeBookHolding.Views
                     var newRecord = new AccountingRecord
                     { Account = account, Value = (decimal)accountValue.Value, Text = "Anfangsbilanz" };
                     accountingRecordList.Add(newRecord);
-                    if (isActiv)
+                    if (!isActiv)
                     {
                         LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(new Journal(0) { CreditAccount = account.Id, Text = newRecord.Text, Value = newRecord.Value });
                     }
@@ -201,7 +201,7 @@ namespace ExtremeBookHolding.Views
                     }
                 }
             }
-            
+
         }
 
 

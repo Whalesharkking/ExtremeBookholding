@@ -48,7 +48,7 @@ namespace ExtremeBookHolding.Core
 
                     if (existingRecord != null)
                     {
-                        LedgerAccountHelper.LedgerAccountList.First(x => x.Account.Id == _debitAccount).DebitAccountingRecords.Remove(existingRecord);
+                        LedgerAccountHelper.LedgerAccountList.First(x => x.Account.Id == _debitAccount && x.DebitAccountingRecords != null).DebitAccountingRecords.Remove(existingRecord);
                     }
                     _debitAccount = value;
                     LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(this);
@@ -70,7 +70,7 @@ namespace ExtremeBookHolding.Core
 
                     if (existingRecord != null)
                     {
-                        LedgerAccountHelper.LedgerAccountList.First(x => x.Account.Id == _creditAccount).CreditAccountingRecords.Remove(existingRecord);
+                        LedgerAccountHelper.LedgerAccountList.First(x => x.Account.Id == _creditAccount && x.CreditAccountingRecords != null).CreditAccountingRecords.Remove(existingRecord);
                     } 
                     _creditAccount = value;
                     LedgerAccountHelper.LedgerAccountList.AddBuchungssatz(this);
