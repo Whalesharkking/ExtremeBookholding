@@ -28,12 +28,12 @@ namespace ExtremeBookHolding.Views
         {
             get
             {
-                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.DebitAccountingRecords!= null && x.DebitAccountingRecords.Any(y => y.ID == 999)));
+                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 999)));
                 foreach (var item in list)
                 {
-                    var sbRecord = item.DebitAccountingRecords.First(y => y.ID == 999);
-                    item.DebitAccountingRecords = new ObservableCollection<AccountingRecord>();
-                    item.DebitAccountingRecords.Add(sbRecord);
+                    var sbRecord = item.CreditAccountingRecords.First(y => y.ID == 999);
+                    item.CreditAccountingRecords = new ObservableCollection<AccountingRecord>();
+                    item.CreditAccountingRecords.Add(sbRecord);
                 }
                 return list.OrderBy(x => x.Account.Id).ToList();
             }
@@ -42,14 +42,16 @@ namespace ExtremeBookHolding.Views
         {
             get
             {
-                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where( x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == 999)));
+                var list = new List<LedgerAccount>(LedgerAccountHelper.LedgerAccountList.Where(x => x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == 999)));
                 foreach (var item in list)
                 {
-                    var sbRecord = item.CreditAccountingRecords.First(y => y.ID == 999);
-                    item.CreditAccountingRecords = new ObservableCollection<AccountingRecord>();
-                    item.CreditAccountingRecords.Add(sbRecord);
+                    var sbRecord = item.DebitAccountingRecords.First(y => y.ID == 999);
+                    item.DebitAccountingRecords = new ObservableCollection<AccountingRecord>();
+                    item.DebitAccountingRecords.Add(sbRecord);
                 }
                 return list.OrderBy(x => x.Account.Id).ToList();
+
+               
             }
         }
 

@@ -199,9 +199,9 @@
                                                    Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center"
                                                    VerticalAlignment="Stretch" />
                                         <Grid Grid.Row="1" Grid.ColumnSpan="2">
-                                            <Label Content="Aktiven" />
+                                            <Label Content="Soll" />
                                             <Label Content="{Binding Account.Name}" HorizontalAlignment="Center" />
-                                            <Label Content="Passiven" HorizontalAlignment="Right" />
+                                            <Label Content="Haben" HorizontalAlignment="Right" />
                                         </Grid>
                                         <StackPanel Grid.Row="2" Orientation="Vertical">
                                             <ItemsControl ItemsSource="{Binding DebitAccountingRecords}">
