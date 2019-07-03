@@ -57,7 +57,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Orientation="Vertical">
                         <Separator HorizontalAlignment="Right" Width="100" />
-                        <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding ActiveAccountingRecordsSummary}" />
+                        <TextBlock Margin="15,0" TextAlignment="Right" Text="{Binding ActivAccountingRecordsSummary}" />
                     </StackPanel>
                     <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical">
                         <ItemsControl ItemsSource="{Binding OrderedPassiveAccountingRecords}">
