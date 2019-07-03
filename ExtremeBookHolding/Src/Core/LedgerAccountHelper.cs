@@ -53,7 +53,7 @@ namespace ExtremeBookHolding.Core
             LedgerAccount debitLedgerAccount = null;
             LedgerAccount creditLedgerAccount = null;
 
-            if (journal.DebitAccount != 0 && !ledgerAccounts.Any(x=>  x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == journal.ID)))
+            if (journal.DebitAccount != 0 && !ledgerAccounts.Where(x => x.Account.Id == journal.DebitAccount).Any(x=>  x.DebitAccountingRecords != null && x.DebitAccountingRecords.Any(y => y.ID == journal.ID)))
             {
                 debitLedgerAccount = ledgerAccounts.FirstOrDefault(x => x.Account.Id == journal.DebitAccount);
                 if (debitLedgerAccount == null)
@@ -69,7 +69,7 @@ namespace ExtremeBookHolding.Core
             }
 
 
-            if (journal.CreditAccount != 0 && !ledgerAccounts.Any(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == journal.ID)))
+            if (journal.CreditAccount != 0 && !ledgerAccounts.Where(x=> x.Account.Id == journal.CreditAccount).Any(x => x.CreditAccountingRecords != null && x.CreditAccountingRecords.Any(y => y.ID == journal.ID)))
             {
                 creditLedgerAccount = ledgerAccounts.FirstOrDefault(x => x.Account.Id == journal.CreditAccount);
                 if (creditLedgerAccount == null)
